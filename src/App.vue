@@ -1,6 +1,12 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <HelloWorld firstName="Ivan" lastName="Ivanov" v-bind:email="email" avatar="70.jpg" />
+    <HelloWorld firstName="Ivan" lastName="Ivanov" v-bind:email="email" avatar="70.jpg" />
+
+  <HelloWorld firstName="Ivan" lastName="Ivanov" v-bind:email="email" avatar="70.jpg" />
+
+  <HelloWorld firstName="Ivan" lastName="Ivanov" v-bind:email="email" avatar="70.jpg" />
+
+  <button @click="getUserData">BUTTON</button>
 </template>
 
 <script>
@@ -10,7 +16,29 @@ export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  data()
+  {
+    return {
+    email: '',
+    firstName: '',
+    lastName: ''
+    }
+  },
+  methods:
+  {
+    getUserData()
+    {
+      this.axios.get('https://randomuser.me/api/').then( (response) =>{
+        console.log(response.data.email)
+        this.email = response.data.results[0].email // подставляем данные из ответа от сервера
+      })
+    }
+  },
+  mounted(){
+    this.getUserData();
   }
+
 }
 </script>
 
